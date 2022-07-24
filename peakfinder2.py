@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Jul 20 18:07:42 2022
+Created on Wed Jul 24 18:07:42 2022
 
 @author: jwang
 """
@@ -28,11 +28,7 @@ def get_peaks(dt, df_all, n, sign=1):
     
     mask = (df_all.index >= dt - pd.DateOffset(2)) & (df_all.index <= dt + pd.DateOffset(2))
     df1 = df_all[mask]        
-    maxd = list(sign*df1['data'])       
-    
-    for i in range(len(maxd)-1):
-        if maxd[i] == maxd[i+1] :
-            maxd[i+1] = maxd[i] + 1e-15
+    maxd = list(sign*df1['data'])           
     df1['maxd'] = maxd               
     #indexes = argrelextrema(np.array(maxd), np.greater_equal, order=n)[0]
     indexes, _ = scipy.signal.find_peaks(np.array(maxd), height=np.mean(maxd)*1.5, distance=n)
